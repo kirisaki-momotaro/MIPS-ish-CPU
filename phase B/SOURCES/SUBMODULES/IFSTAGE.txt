@@ -1,0 +1,22 @@
+Έχει γίνει μια μικρή διόρθωση μέσα στο IFSTAGE 
+στο σήμα PC_Immed το οποίο είχε παραληφθεί 
+να πολλαπλασιαστεί *4 πριν μπει στον αθροιστή +4 
+ο οποίος εν τέλη καταλήγει στο PC με αποτέλεσμα 
+οι εντολές Branch να μην έχουν την επιθυμητή λειτουργία. 
+
+Παρακάτω παρουσιάζεται ο κώδικας πριν και μετα.
+
+ΠΡΙΝ
+immed:PC_Immed_Adder
+	PORT MAP(PC_Immed=>PC_Immed,PC_plus_four=>plus4_out
+	,output=>immed_out);
+ΜΕΤΑ
+Προστέθηκε το σήμα: signal PC_Immed_tmp:STD_LOGIC_VECTOR (31 downto 0);
+Με:
+begin
+PC_Immed_tmp<=PC_Immed(29 downto 0)&"00";
+
+
+immed:PC_Immed_Adder
+	PORT MAP(PC_Immed=>PC_Immed_tmp,PC_plus_four=>plus4_out
+	,output=>immed_out);
